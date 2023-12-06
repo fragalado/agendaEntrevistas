@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "ejemplo-chart": {
+      "hosting": {
+        "agendaEntrevistas": [
+          "ejemplo-chart"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "ejemplo-chart"
+  }
+}

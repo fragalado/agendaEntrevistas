@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Dia</th>
+                    <th scope="col">Hora</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Entrevistador</th>
+                    <th scope="col">Del/Add</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cita of citas">
+                    <th scope="row" *ngIf="cita.cliente"><span style="color: red;">No disponible</span></th>
+                    <th scope="row" *ngIf="!cita.cliente"><span style="color: Green;">Disponible</span></th>
+                    <td>{{cita.diaCita}}</td>
+                    <td>{{cita.horaCita}}</td>
+                    <td>{{cita.cliente?.dni}}</td>
+                    <td>{{cita.entrevistadoPor}}</td>
+                    <td>
+                        <i class="bi bi-trash text-danger" style="margin-left: 6px;"></i>
+                        <i class="bi bi-pencil-square text-success" style="margin-left: 16px;" routerLink="/citas/detalle/{{cita.id}}"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

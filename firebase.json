@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "agendaEntrevistas",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}

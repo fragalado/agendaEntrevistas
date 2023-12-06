@@ -1,0 +1,52 @@
+<!-- Formulario estilizado por mi -->
+<!-- <form>
+    <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="nombre" [(ngModel)]="cliente.nombre" name="nombre">
+    </div>
+    <div class="mb-3">
+        <label for="apellidos" class="form-label">Apellidos</label>
+        <input type="text" class="form-control" id="apellidos" [(ngModel)]="cliente.apellidos" name="apellidos">
+    </div>
+    <div class="mb-3">
+        <label for="dni" class="form-label">Dni</label>
+        <input type="text" class="form-control" id="dni" [(ngModel)]="cliente.dni" name="dni">
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="text" class="form-control" id="email" [(ngModel)]="cliente.email" name="email">
+    </div>
+    <div class="mb-3">
+        <label for="tlf" class="form-label">Teléfono</label>
+        <input type="text" class="form-control" id="tlf" [(ngModel)]="cliente.telefono" name="tlf">
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="enviaDatos()" routerLink="/clientes/listado">Enviar</button>
+    <button type="button" class="btn btn-secondary" style="float: right;" routerLink="/clientes/listado">Volver</button>
+</form> -->
+
+
+<!-- Formulario estilizado por chatgpt -->
+<form [formGroup]="formCliente" class="beautiful-form" (submit)="enviaDatos()">
+    <div class="mb-4">
+        <label for="nombre" class="form-label fs-5 text-primary">Nombre</label>
+        <input type="text" class="form-control form-control-lg rounded-pill" id="nombre" formControlName="nombre" name="nombre" placeholder="Ingresa tu nombre">
+    </div>
+    <div class="mb-4">
+        <label for="apellidos" class="form-label fs-5 text-primary">Apellidos</label>
+        <input type="text" class="form-control form-control-lg rounded-pill" id="apellidos" formControlName="apellidos" name="apellidos" placeholder="Ingresa tus apellidos">
+    </div>
+    <div class="mb-4">
+        <label for="dni" class="form-label fs-5 text-primary">DNI</label>
+        <input type="text" class="form-control form-control-lg rounded-pill" id="dni" formControlName="dni" name="dni" placeholder="Ingresa tu DNI">
+    </div>
+    <div class="mb-4">
+        <label for="email" class="form-label fs-5 text-primary">Email</label>
+        <input type="email" class="form-control form-control-lg rounded-pill" id="email" formControlName="email" name="email" placeholder="Ingresa tu correo electrónico">
+    </div>
+    <div class="mb-4">
+        <label for="tlf" class="form-label fs-5 text-primary">Teléfono</label>
+        <input type="text" class="form-control form-control-lg rounded-pill" id="tlf" formControlName="telefono" name="tlf" placeholder="Ingresa tu número de teléfono">
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg rounded-pill" [disabled]="!formCliente.valid">Enviar</button>
+    <button type="button" class="btn btn-secondary btn-lg ms-2 rounded-pill" style="float: right;" routerLink="/clientes/listado">Volver</button>
+</form>

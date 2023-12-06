@@ -1,0 +1,23 @@
+<form *ngIf="id">
+    <div class="mb-3">
+        <label for="dia" class="form-label">Día</label>
+        <input type="text" class="form-control" id="dia" name="dia" value="{{datosCita.diaCita}}" readonly>
+    </div>
+    <div class="mb-3">
+        <label for="hora" class="form-label">Hora</label>
+        <input type="text" class="form-control" id="hora" name="hora" value="{{datosCita.horaCita}}" readonly>
+    </div>
+    <div class="mb-3">
+        <label for="entrevistador" class="form-label">Entrevistador</label>
+        <input type="text" class="form-control" id="entrevistador" name="entrevistador" value="{{datosCita.entrevistadoPor}}" readonly>
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Cliente</label>
+        <select id="usuario" class="form-select" [(ngModel)]="datosCita.idCliente" name="selectUsuarios">
+            <option *ngIf="selectedCliente" [ngValue]="selectedCliente.id" selected>{{selectedCliente.nombre}} {{selectedCliente.apellidos}}</option>
+            <option *ngFor="let cliente of todosClientes" [ngValue]="cliente.id">{{cliente.nombre}} {{cliente.apellidos}}</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary" routerLink="/citas/listado" (click)="enviar()">Enviar</button>
+    <button type="button" class="btn btn-secondary" style="float: right;" routerLink="/citas/listado">Volver</button>
+</form>
