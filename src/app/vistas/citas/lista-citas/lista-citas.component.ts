@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Cita, DatosCita } from 'src/app/modelos/cita';
+import { Cliente } from 'src/app/modelos/cliente';
 import { DatabaseService } from 'src/app/servicios/database.service';
 
 @Component({
@@ -10,6 +11,7 @@ import { DatabaseService } from 'src/app/servicios/database.service';
 export class ListaCitasComponent {
 
   datosCitas?: DatosCita[];
+  clientes?: Cliente[];
   citas: Cita[] = [];
 
   // Variables para la fecha
@@ -27,52 +29,61 @@ export class ListaCitasComponent {
   // Método que obtiene las citas del día desde la base de datos.
   // Si no existe ninguna cita las crea.
   obtenerCitasDia() {
-    // Limpiamos el array citas
-    this.citas = [];
-
     // Construye la fecha en formato "ddmmaaaa"
     const fecha = `${this.dia}${this.mes}${this.anyo}`;
 
     // Obtiene las citas del día de la base de datos
     this.dbs.getCollection(`agenda/${fecha}/citas`).subscribe((res) => {
-      // Verifica si no hay citas y llama a la función para agregarlas
       if (res.length === 0) {
-        this.addCitas(); // No hay citas, se agregan llamando a la función addCitas
+        // Si no hay citas para el día, llamamos a la función para agregar citas
+        this.addCitas();
       } else {
-        // Procesa cada cita
+        // Almacenamos las citas obtenidas en la variable datosCitas
         this.datosCitas = res;
 
-        // Itera sobre cada cita obtenida
-        this.datosCitas.forEach((cita) => {
-          if (!cita.idCliente) {
-            // Si la cita no tiene un cliente asociado,
-            // Crea una nueva cita sin el cliente
-            const citaCambio: Cita = {
-              diaCita: cita.diaCita,
-              entrevistadoPor: cita.entrevistadoPor,
-              horaCita: cita.horaCita,
-              visto: cita.visto,
-              id: cita.id
-            };
-            // Agrega la nueva cita al array de citas
-            this.citas.push(citaCambio);
-          } else {
-            // Si la cita tiene un cliente asociado, obtén la información del cliente
-            this.dbs.getDocumentById(cita.idCliente, "clientes").subscribe((cliente) => {
-              // Crea una nueva cita con los datos completos, incluyendo el cliente
+        // Obtenemos la colección de clientes
+        this.dbs.getCollection("clientes").subscribe((aux) => {
+          // Limpiamos el array citas
+          this.citas = [];
+
+           // Almacenamos la lista de clientes en la variable clientes
+          this.clientes = aux;
+
+          // Recorremos las citas
+          this.datosCitas?.forEach((cita) => {
+            if (!cita.idCliente) {
+              // Si la cita no tiene un cliente asociado,
+              // Crea una nueva cita sin el cliente
               const citaCambio: Cita = {
-                id: cita.id,
                 diaCita: cita.diaCita,
                 entrevistadoPor: cita.entrevistadoPor,
                 horaCita: cita.horaCita,
                 visto: cita.visto,
-                cliente: cliente,
+                id: cita.id
               };
               // Agrega la nueva cita al array de citas
               this.citas.push(citaCambio);
-            });
-          }
-        });
+            } else {
+              // Si tiene cliente
+              // Buscaremos el cliente por el id en la lista cliente
+              this.clientes?.forEach((cliente) => {
+                if (cita.idCliente === cliente.id) {
+                  // Creamos una nueva cita con el cliente asociado
+                  const citaCambio: Cita = {
+                    id: cita.id,
+                    diaCita: cita.diaCita,
+                    entrevistadoPor: cita.entrevistadoPor,
+                    horaCita: cita.horaCita,
+                    visto: cita.visto,
+                    cliente: cliente,
+                  };
+                  // Agregamos la nueva cita al array de citas
+                  this.citas.push(citaCambio);
+                }
+              })
+            }
+          })
+        })
       }
     });
   }

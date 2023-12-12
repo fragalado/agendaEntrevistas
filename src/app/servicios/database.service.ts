@@ -36,7 +36,6 @@ export class DatabaseService {
 
   // Actualiza un documento
   updateDocument(objeto: any, coleccion: string) {
-    console.log("Servicio: "+objeto.id);
     const docRef = doc(this.fs, coleccion+"/"+objeto.id);
     return updateDoc(docRef, objeto); // Devuelve una promesa
   }
